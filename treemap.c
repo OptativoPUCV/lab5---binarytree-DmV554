@@ -64,8 +64,8 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) {
     }
 
     // Crear el nuevo nodo y enlazarlo
-    Pair* newPair = createPair(key, value);
-    TreeNode* newNode = createTreeNode(newPair);
+
+    TreeNode* newNode = createTreeNode(key, value);
     newNode->parent = parent;
     if (parent == NULL) {
         tree->root = newNode; // Árbol vacío
