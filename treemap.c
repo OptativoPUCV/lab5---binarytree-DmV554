@@ -49,6 +49,8 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) {
    if (tree == NULL || key == NULL || value == NULL) {
         return; // verificamos si el árbol o los datos son nulos
     }
+
+  if(searchTreeMap(tree, key) != NULL) return;
     
     if (tree->root == NULL) { // si el árbol está vacío, creamos el primer nodo
         TreeNode*node = createTreeNode(key, value);
@@ -68,9 +70,7 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) {
         } else if (tree->lower_than(current_node->pair->key, key)) {
             parent_node = current_node;
             current_node = current_node->right;
-        } else {
-            return; // la clave ya existe, no se permite claves duplicadas
-        }
+        } 
     }
     
     TreeNode* node = createTreeNode(key, value);
