@@ -51,15 +51,7 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) {
     }
     
     if (tree->root == NULL) { // si el árbol está vacío, creamos el primer nodo
-        Pair* pair = (Pair*) malloc(sizeof(Pair));
-        pair->key = key;
-        pair->value = value;
-        
-        TreeNode* node = (TreeNode*) malloc(sizeof(TreeNode));
-        node->pair = pair;
-        node->left = NULL;
-        node->right = NULL;
-        node->parent = NULL;
+        TreeNode*node = createTreeNode(key, value);
         
         tree->root = node;
         tree->current = node;
