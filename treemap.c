@@ -98,65 +98,7 @@ TreeNode * minimum(TreeNode * x){
 
 
 void removeNode(TreeMap * tree, TreeNode* node) {
- if (node == NULL) {
-        return;
-    }
-    
-    if (node->left == NULL && node->right == NULL) { // Nodo sin hijos
-        if (node == tree->root) {
-            tree->root = NULL;
-        } else {
-            if (node == node->parent->left) {
-                node->parent->left = NULL;
-            } else {
-                node->parent->right = NULL;
-            }
-        }
-        free(node->pair);
-        free(node);
-        return;
-    }
-    
-    if (node->left != NULL && node->right == NULL) { // Nodo con un hijo izquierdo
-        if (node == tree->root) {
-            tree->root = node->left;
-            tree->root->parent = NULL;
-        } else {
-            if (node == node->parent->left) {
-                node->parent->left = node->left;
-            } else {
-                node->parent->right = node->left;
-            }
-            node->left->parent = node->parent;
-        }
-        free(node->pair);
-        free(node);
-        return;
-    }
-    
-    if (node->left == NULL && node->right != NULL) { // Nodo con un hijo derecho
-        if (node == tree->root) {
-            tree->root = node->right;
-            tree->root->parent = NULL;
-        } else {
-            if (node == node->parent->left) {
-                node->parent->left = node->right;
-            } else {
-                node->parent->right = node->right;
-            }
-            node->right->parent = node->parent;
-        }
-        free(node->pair);
-        free(node);
-        return;
-    }
-    
-    if (node->left != NULL && node->right != NULL) { // Nodo con dos hijos
-        TreeNode* minNode = minimum(node->right);
-        node->pair = minNode->pair;
-        removeNode(tree, minNode);
-        return;
-    }
+
   
 }
 
