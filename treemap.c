@@ -46,37 +46,58 @@ TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2)) {
 
 
 void insertTreeMap(TreeMap * tree, void* key, void * value) {
-  if (tree == NULL || key == NULL || value == NULL) {
-        return; // Verificar entradas válidas
+   if (tree == NULL || key == NULL || value == NULL) {
+        return; // verificamos si el árbol o los datos son nulos
     }
-
-    // Buscar la posición de inserción para la clave
-    TreeNode* current = tree->root;
-    TreeNode* parent = NULL;
-    int cmp = 0;
-    while (current != NULL) {
-        cmp = tree->lower_than(key, current->pair->key);
-        if (cmp == 0) {
-            return; // Clave ya existe
+    
+    if (tree->root == NULL) { // si el árbol está vacío, creamos el primer nodo
+        Pair* pair = (Pair*) malloc(sizeof(Pair));
+        pair->key = key;
+        pair->value = value;
+        
+        TreeNode* node = (TreeNode*) malloc(sizeof(TreeNode));
+        node->pair = pair;
+        node->left = NULL;
+        node->right = NULL;
+        node->parent = NULL;
+        
+        tree->root = node;
+        tree->current = node;
+        return;
+    }
+    
+    TreeNode* current_node = tree->root;
+    TreeNode* parent_node = NULL;
+    
+    while (current_node != NULL) { // buscamos la posición adecuada para insertar el nuevo nodo
+        if (tree->lower_than(key, current_node->pair->key)) {
+            parent_node = current_node;
+            current_node = current_node->left;
+        } else if (tree->lower_than(current_node->pair->key, key)) {
+            parent_node = current_node;
+            current_node = current_node->right;
+        } else {
+            return; // la clave ya existe, no se permite claves duplicadas
         }
-        parent = current;
-        current = (cmp < 0) ? current->left : current->right;
     }
-
-    // Crear el nuevo nodo y enlazarlo
-
-    TreeNode* newNode = createTreeNode(key, value);
-    newNode->parent = parent;
-    if (parent == NULL) {
-        tree->root = newNode; // Árbol vacío
-    } else if (cmp < 0) {
-        parent->left = newNode;
+    
+    Pair* pair = (Pair*) malloc(sizeof(Pair));
+    pair->key = key;
+    pair->value = value;
+    
+    TreeNode* node = (TreeNode*) malloc(sizeof(TreeNode));
+    node->pair = pair;
+    node->left = NULL;
+    node->right = NULL;
+    node->parent = parent_node;
+    
+    if (tree->lower_than(key, parent_node->pair->key)) {
+        parent_node->left = node;
     } else {
-        parent->right = newNode;
+        parent_node->right = node;
     }
-
-
-    tree->current = newNode;
+    
+    tree->current = node;
 }
 
 
