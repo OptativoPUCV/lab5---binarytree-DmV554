@@ -184,10 +184,10 @@ Pair * upperBound(TreeMap * tree, void* key) {
     
     while (current != NULL) {
         if (tree->lower_than(key, current->pair->key)) {
-            
+            ub_node = current;
             current = current->left;
         } else if (tree->lower_than(key, current->pair->key) == 0) {
-            ub_node = current;
+            
             current = current->right;
         } else {
             // Encontramos el par con clave igual a key
