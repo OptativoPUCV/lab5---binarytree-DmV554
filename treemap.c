@@ -190,18 +190,14 @@ Pair * upperBound(TreeMap * tree, void* key) {
             
             current = current->right;
         } else {
-            // Encontramos el par con clave igual a key
+            
             return current->pair;
         }
 
     }
-    
-    // Si no encontramos el par exacto, retornamos el primer par asociado a una clave mayor o igual a key
-    if (ub_node == NULL) {
-        return current->pair;
-    } else {
+
         return ub_node->pair;
-    }
+   
 }
 
 Pair * firstTreeMap(TreeMap * tree) {
