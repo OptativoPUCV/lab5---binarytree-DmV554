@@ -175,7 +175,31 @@ Pair * searchTreeMap(TreeMap * tree, void* key) {
 
 
 Pair * upperBound(TreeMap * tree, void* key) {
-    return NULL;
+    if (tree == NULL || tree->root == NULL) {
+        return NULL;
+    }
+    
+    TreeNode* current = tree->root;
+    TreeNode* ub_node = NULL;
+    
+    while (current != NULL) {
+        if (tree->lower_than(key, current->pair->key)) {
+            ub_node = current;
+            current = current->left;
+        } else if (tree->lower_than(key, current->pair->key) == 0) {
+            current = current->right;
+        } else {
+            // Encontramos el par con clave igual a key
+            return current->pair;
+        }
+    }
+    
+    // Si no encontramos el par exacto, retornamos el primer par asociado a una clave mayor o igual a key
+    if (ub_node == NULL) {
+        return current->pair;
+    } else {
+        return ub_node->pair;
+    }
 }
 
 Pair * firstTreeMap(TreeMap * tree) {
@@ -196,7 +220,7 @@ Pair * nextTreeMap(TreeMap * tree) {
         tree->current = current;
         return current->pair;
     } else {
-        if(current->parent != NULL && current->parent->right == current) {
+        while(current->parent != NULL && current->parent->right == current) {
             current = current->parent;
         }
       
