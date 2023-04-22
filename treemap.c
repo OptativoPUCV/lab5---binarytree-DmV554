@@ -194,8 +194,6 @@ Pair * upperBound(TreeMap * tree, void* key) {
             return current->pair;
         }
 
-
-        return ub_node->pair;
     }
     
     // Si no encontramos el par exacto, retornamos el primer par asociado a una clave mayor o igual a key
