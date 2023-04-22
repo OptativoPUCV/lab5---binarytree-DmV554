@@ -135,6 +135,8 @@ void removeNode(TreeMap * tree, TreeNode* node) {
         }
         free(node);
      
+    } else if(node->left != NULL && node->right != NULL) {
+        
     }
 
 
@@ -180,5 +182,10 @@ Pair * firstTreeMap(TreeMap * tree) {
 }
 
 Pair * nextTreeMap(TreeMap * tree) {
+  if(tree->current->right != NULL) {
+    tree->current = tree->current->right;
+    tree->current = minimum(tree->current);
+    return tree->current->pair;
+  }
     return NULL;
 }
